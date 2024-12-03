@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer ou Modifier un Patient</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div th:replace="fragments/header :: header"></div>
+
+    <h1 th:text="${patient?.id != null ? 'Modifier un Patient' : 'Créer un Patient'}"></h1>
+
+    <!-- Affichage des erreurs -->
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- Formulaire de création ou de modification -->
+    <form th:action="@{/patients}" th:method="post" class="row g-3">
+        <!-- Champ caché pour l'ID, utilisé uniquement pour la modification -->
+        <div th:if="${patient != null && patient.id != null}" class="d-none">
+            <input type="hidden" name="id" th:value="${patient.id}">
+        </div>
+        <div class="col-md-6">
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" id="nom" name="nom" class="form-control" th:value="${patient?.nom}" required>
+        </div>
+        <div class="col-md-6">
+            <label for="prenom" class="form-label">Prénom</label>
+            <input type="text" id="prenom" name="prenom" class="form-control" th:value="${patient?.prenom}" required>
+        </div>
+        <div class="col-md-6">
+            <label for="dateDeNaissance" class="form-label">Date de Naissance</label>
+            <input type="date" id="dateDeNaissance" name="dateDeNaissance" class="form-control" th:value="${patient?.dateDeNaissance}" required>
+        </div>
+        <div class="col-md-6">
+            <label for="genre" class="form-label">Genre</label>
+            <select id="genre" name="genre" class="form-select" required>
+                <option value="M" th:selected="${patient?.genre == 'M'}">Masculin</option>
+                <option value="F" th:selected="${patient?.genre == 'F'}">Féminin</option>
+            </select>
+        </div>
+        <div class="col-md-12">
+            <label for="adresse" class="form-label">Adresse</label>
+            <input type="text" id="adresse" name="adresse" class="form-control" th:value="${patient?.adresse}">
+        </div>
+        <div class="col-md-6">
+            <label for="telephone" class="form-label">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone" class="form-control" th:value="${patient?.telephone}">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+    </form>
+    <a th:if="${patient?.id}" th:href="@{/patients/{id}/history(id=${patient.id})}" class="btn btn-primary mt-3">Voir l'historique</a>
+    <a th:href="@{/home}" class="btn btn-secondary mt-3">Retour à la liste des patients</a>
+
+</div>
+</body>
+</html>

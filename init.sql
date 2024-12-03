@@ -1,0 +1,2 @@
+INSERT INTO users (id, password, role, username) VALUES (1, 'password1', 'Organizer', 'organizer_user');
+INSERT INTO users (id, password, role, username) VALUES (2, 'password2', 'Praticien', 'praticien_user');

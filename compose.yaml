@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    environment:
+      - MARIADB_DATABASE=UsersPatient
+      - MARIADB_ROOT_PASSWORD=root
+    ports:
+      - "3309:3306"  # Exposez le port 3306 du conteneur sur l'hôte sur le port 3309
+    networks:
+      - springboot-network
+  front-patient:
+    build: .
+    ports:
+      - "8092:8092" # Mappe le port 8092 du conteneur au port 8092 de l'hôte
+    image: front-patient:latest
+    restart: on-failure
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/UsersPatient
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on: [ mariadb ]
+    networks:
+      - springboot-network
+networks:
+  springboot-network:
+    external: true

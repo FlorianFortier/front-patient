@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Historique du Patient</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div th:replace="fragments/header :: header"></div>
+    <!-- Affichage des erreurs -->
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+        <p th:text="${error}"></p>
+    </div>
+    <div th:if="${success}" class="alert alert-success" role="alert">
+        <p th:text="${success}"></p>
+    </div>
+    <!-- Bouton retour -->
+
+    <div class="row mb-3 p-3">
+        <a th:href="@{/home}" class="btn btn-secondary col-2">Retour à la liste des patients</a>
+
+        <div class="col-2">
+            <form th:action="@{/diabetes/calculate-risk}" th:method="post">
+                <input type="hidden" name="id" th:value="${patientId}">
+                <button type="submit" class="btn btn-warning">Calculer le Risque de Diabète</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Historique -->
+    <div th:if="${history}">
+        <h3>Historique pour le patient : <span th:text="${history[0].getPatient()}"></span></h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Note</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entry : ${history}">
+                <td th:text="${entry.note}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Formulaire pour ajouter une note -->
+    <div class="mt-5">
+        <h4>Ajouter une note</h4>
+        <form th:action="@{/patients/{id}/history/add(id=${patientId})}" th:method="post" class="row g-3">
+            <div class="col-12">
+                <label for="note" class="form-label">Nouvelle Note</label>
+                <textarea id="note" name="note" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
