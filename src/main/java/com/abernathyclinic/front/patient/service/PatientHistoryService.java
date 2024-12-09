@@ -33,7 +33,7 @@ public class PatientHistoryService {
      * @return Une réponse contenant la liste des historiques du patient.
      */
     public ResponseEntity<List<PatientHistory>> getPatientHistoryById(int patientId, String jwtToken) {
-        String url = "http://192.168.0.102:9101/api/gateway/history/" + patientId;
+        String url = "http://192.168.0.102:9101/api/history/" + patientId;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(jwtToken);
@@ -57,7 +57,7 @@ public class PatientHistoryService {
      * @param jwtToken  Le token JWT utilisé pour l'authentification.
      */
     public void addNoteToPatientHistory(int patientId, PatientHistory note, String jwtToken) {
-        String url = "http://192.168.0.102:9101/api/gateway/history/" + patientId + "/add";
+        String url = "http://192.168.0.102:9101/api/history/" + patientId + "/add";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(jwtToken);

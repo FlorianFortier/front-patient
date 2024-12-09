@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class PatientService {
 
-    private static final String GATEWAY_PATIENT_URL = "http://192.168.0.102:9101/api/gateway/patients";
+    private static final String GATEWAY_PATIENT_URL = "http://192.168.0.102:9101/api/patients";
     private final RestTemplate restTemplate;
 
     /**

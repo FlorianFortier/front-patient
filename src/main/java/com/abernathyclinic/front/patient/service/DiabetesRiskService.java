@@ -19,7 +19,7 @@ import java.util.List;
 public class DiabetesRiskService {
 
     private final RestTemplate restTemplate;
-    private static final String GATEWAY_PATIENT_URL = "http://192.168.0.102:9101/api/gateway/diabetes";
+    private static final String GATEWAY_DIABETES_URL = "http://192.168.0.102:9101/diabetes";
     private final PatientService patientService;
 
     /**
@@ -51,7 +51,7 @@ public class DiabetesRiskService {
      * @return Le niveau de risque calculé par le microservice Risk.
      */
     public String calculateRisk(List<PatientHistory> history, String jwtToken) {
-        String url = GATEWAY_PATIENT_URL + "/risk";
+        String url = GATEWAY_DIABETES_URL + "/risk";
 
         Patient retrievedPatient = patientService.getPatientById(history.get(0).getPatId(), jwtToken).getBody();
 
